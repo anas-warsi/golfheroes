@@ -1,16 +1,27 @@
-FROM webdevops/php-apache:8.4
+FROM php:8.4-apache
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    curl \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install pdo pdo_mysql zip
 
-COPY . /app
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-ENV WEB_DOCUMENT_ROOT=/app/public
+WORKDIR /var/www/html
+
+COPY . .
+
+RUN a2enmod rewrite
+
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 RUN composer install --no-dev --optimize-autoloader
 
 RUN php artisan storage:link || true
 
-RUN chown -R application:application /app/storage
-RUN chown -R application:application /app/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 80
