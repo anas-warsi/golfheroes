@@ -112,12 +112,12 @@ export const AdminWinnersPage = () => {
               <td className="px-6 py-4">
                 {winner.proof_image ? (
                   <a
-                    href={`http://localhost:8000/storage/${winner.proof_image}`}
+                    href={`https://golfheroes-backend.onrender.com/storage/${winner.proof_image}`}
                     target="_blank"
                     rel="noreferrer"
                   >
                     <img
-                      src={`http://localhost:8000/storage/${winner.proof_image}`}
+                      src={`https://golfheroes-backend.onrender.com/storage/${winner.proof_image}`}
                       alt="proof"
                       className="w-24 h-24 object-cover rounded-lg border border-white/10 hover:scale-105 transition"
                     />
