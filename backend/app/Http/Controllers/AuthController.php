@@ -26,6 +26,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'charity_id' => $request->charity_id,
             'charity_percentage' => $request->charity_percentage ?: 10,
+            'subscription_status' => 'inactive',
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
